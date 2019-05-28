@@ -1,0 +1,32 @@
+<html>
+<!--This is a simple test of tinymce on a page with no server response-->
+<head>
+  <script type="text/javascript" src="../tinymce/js/tinymce/tinymce.min.js">
+  </script>
+  <script type="text/javascript">
+  tinymce.init({
+    selector: 'div.editable',
+    inline: true, //inline mode covers up text above rather than pushing stuff down.
+    //width: 600,
+    height: 300,
+    toolbar: "align format forecolor backcolor",
+    });
+  </script>
+  <style type="text/css">
+  div.editable{
+      border-width:thin;
+      border-color:black;
+      border-style:solid;
+  }
+  code {
+      background-color:lightgrey;
+      margin-left:2.5em;
+  }
+  </style>
+</head>
+<body>
+<div>Below should be editable using TinyMCE.</div>
+<p>A few more lines of text for this to be below.</p>
+<p>-------------blank----------------------</p>
+<div id="editable" class="editable">Change this text.</div>
+</html>
