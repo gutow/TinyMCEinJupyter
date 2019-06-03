@@ -6,9 +6,11 @@ function toWYSIWYG() {
 		newselect.onclick = function() {
 	currentcell = Jupyter.notebook.get_selected_cell();
 	var inner_cell = currentcell.inner_cell[0];
+	inner_cell.innerHTML="";
 	var input_area=document.createElement('div');
 	inner_cell.appendChild(input_area);
 	input_area.innerHTML = "Cick here to edit";
+	input_area.className += " input_area"
 	input_area.className += " rendered";
 	input_area.className += " WYSIWYG";
     tinymce.init({
