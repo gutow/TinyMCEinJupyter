@@ -5,7 +5,9 @@ function toWYSIWYG() {
 		newselect.innerHTML = "toWYSIWYG";
 		newselect.onclick = function() {
 	currentcell = Jupyter.notebook.get_selected_cell();
-	var input_area = currentcell.inner_cell[0];
+	var inner_cell = currentcell.inner_cell[0];
+	var input_area=document.createElement('div');
+	inner_cell.appendChild(input_area);
 	input_area.innerHTML = "Cick here to edit";
 	input_area.className += " rendered";
 	input_area.className += " WYSIWYG";
