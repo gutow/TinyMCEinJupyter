@@ -14,7 +14,7 @@ define([
     'codemirror/lib/codemirror',
     'codemirror/mode/gfm/gfm',
     'notebook/js/codemirror-ipythongfm',
-    'tinymce/js/tinymce/tinymce.min.js'
+    'tinymce/js/tinymce/tinymce.min'
 ], function(
     $,
     utils,
@@ -100,22 +100,15 @@ define([
             cell: this, 
             notebook: this.notebook});
         inner_cell.append(this.celltoolbar.element);
-        var input_area = $('<div/>').addClass('input_area');
-       this.tinyMCE = tinymce.init({
-       		selector: 'div.WYSIWYG',
-       		inline: true, //inline mode covers up text above rather than pushing stuff down.
-       		//width: 600,
-    		//height: 300,
-    		toolbar: "align format forecolor backcolor",
-       		});
+        var input_area = $('<div/>').addClass('input_area WYSIWYG' );
         // In case of bugs that put the keyboard manager into an inconsistent state,
         // ensure KM is enabled when CodeMirror is focused:
-        this.tinyMCE.on('focus', function () {
+        this.tinymce.on('focus', function () {
             if (that.keyboard_manager) {
                 that.keyboard_manager.enable();
             }
         });
-        this.tinyMCE.on('keydown', $.proxy(this.handle_keyevent,this))
+        this.tinymce.on('keydown', $.proxy(this.handle_keyevent,this))
         // The tabindex=-1 makes this div focusable.
         var render_area = $('<div/>').addClass('text_cell_render rendered_html')
             .attr('tabindex','-1');
@@ -137,13 +130,13 @@ define([
     };
 
     WYSIWYGCell.prototype.select = function () {
-        var cont = Cell.prototype.select.apply(this, arguments);
+        //var cont = Cell.prototype.select.apply(this, arguments);
       /*   if (cont) {
             if (this.mode === 'edit') {
                 this.code_mirror.refresh();
             }
         } */
-        return cont;
+        //return cont;
     };
 
     WYSIWYGCell.prototype.unrender = function () {
@@ -167,7 +160,7 @@ define([
      * @retrun {string} CodeMirror current text value
      */
     WYSIWYGCell.prototype.get_text = function() {
-        return this.tinyMCE.get();
+        return this.tinymce.get();
     };
 
     /**
@@ -176,7 +169,7 @@ define([
      * @method set_text
      * */
     WYSIWYGCell.prototype.set_text = function(text) {
-        this.tinyMCE.set(text);
+        this.tinymce.set(text);
         this.unrender();
         this.code_mirror.refresh();
     };
@@ -213,7 +206,7 @@ define([
                 this.set_text(data.source);
                 // make this value the starting point, so that we can only undo
                 // to this state, instead of a blank cell
-                this.tinyMCE.UndoManager.clear();
+                this.tinymce.UndoManager.clear();
                 // TODO: This HTML needs to be treated as potentially dangerous
                 // user input and should be handled before set_rendered.
                 this.set_rendered(data.rendered || '');
@@ -297,6 +290,13 @@ function toTinyMCE() {
 	}
 
 }
+tinymce.init({
+       		selector: 'WYSIWYG',
+       		inline: true, //inline mode covers up text above rather than pushing stuff down.
+       		//width: 600,
+    		//height: 300,
+    		toolbar: "align format forecolor backcolor",
+       		});
 toTinyMCE();
 
 function to_WYSIWYG_cell() {
@@ -310,6 +310,6 @@ function to_WYSIWYG_cell() {
 	target_cell.metadata = source_cell.metadata;
 	target_cell.attachments = source_cell.attachments
 	target_cell.content = text;
-	target_cell.UndoManager.clear();
+	target_cell.tinymce.UndoManager.clear();
 	source_cell.element.remove();
 }
