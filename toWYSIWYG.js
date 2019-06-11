@@ -9,10 +9,11 @@ function toWYSIWYG() {
 	inner_cell.innerHTML="";
 	var input_area=document.createElement('div');
 	inner_cell.appendChild(input_area);
-	input_area.innerHTML = "Cick here to edit";
+	var WYSIWYG=document.createElement('div');
+	input_area.appendChild(WYSIWYG);
+	WYSIWYG.innerHTML = "Cick here to edit";
 	input_area.className += " input_area"
-	input_area.className += " rendered";
-	input_area.className += " WYSIWYG";
+	WYSIWYG.className += " WYSIWYG";
     tinymce.init({
       selector: 'div.WYSIWYG',
       inline: true, //inline mode covers up text above rather than pushing stuff down.
