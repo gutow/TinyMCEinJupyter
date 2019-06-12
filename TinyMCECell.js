@@ -14,7 +14,7 @@ define([
     'codemirror/lib/codemirror',
     'codemirror/mode/gfm/gfm',
     'notebook/js/codemirror-ipythongfm',
-    'tinymce/js/tinymce/tinymce.min'
+    'components/tinymce/js/tinymce/tinymce.min'
 ], function(
     $,
     utils,
