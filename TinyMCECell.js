@@ -300,6 +300,13 @@ tinymce.init({
 toTinyMCE();
 
 function to_WYSIWYG_cell() {
+	tinymce.init({
+       		selector: 'WYSIWYG',
+       		inline: true, //inline mode covers up text above rather than pushing stuff down.
+       		//width: 600,
+    		//height: 300,
+    		toolbar: "align format forecolor backcolor",
+       		});
 	var source_cell = Jupyter.notebook.get_selected_cell();
 	var source_index = Jupyter.notebook.get_selected_index();
 	var target_cell = Jupyter.notebook.insert_cell_below('WYSIWYGCell', source_index);
